@@ -83,7 +83,20 @@ solomon/
   play.py             play entry points
 ```
 
-## What's next
+## Limitations
 
-- Piece-square tables, so he understands where pieces want to be
-- A real rating from a longer Stockfish match
+Solomon is a hobby engine and he plays like one.
+
+- **Short sight.** He searches two plies deep, plus a short capture-only extension. Anything that
+  needs three or more moves of calculation is invisible to him, so a patient player can set traps
+  he walks straight into.
+- **Mostly material.** His judgment is the piece count with a small nudge from the network. He has
+  no real idea about king safety, pawn structure, open files or piece activity.
+- **Self-play teaches him little.** The network can only move the score by less than a pawn, and the
+  training signal is noisy (game results, with long games decided by counting material). It helps him
+  break ties between moves. It doesn't make him a positional player.
+- **Slow.** He's pure Python on top of python-chess, so every extra ply of depth costs a lot of time.
+- **Rough edges.** No opening book, no endgame knowledge and no time controls (he searches a fixed
+  depth). The board always promotes to a queen. There's no UCI support, so he can't plug into chess
+  GUIs or play on Lichess as a bot.
+- **Unrated.** I haven't measured his rating against Stockfish yet.
